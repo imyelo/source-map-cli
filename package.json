@@ -2,10 +2,12 @@
   "name": "@yelo/source-map-cli",
   "version": "0.0.0",
   "description": "",
-  "main": "lib/index.js",
   "files": [
-    "lib"
+    "bin"
   ],
+  "bin": {
+    "source-map": "./bin/source-map"
+  },
   "repository": {
     "url": "imyelo/source-map-cli",
     "type": "git"
