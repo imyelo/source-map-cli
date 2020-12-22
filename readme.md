@@ -1,5 +1,7 @@
 # @yelo/source-map-cli
 
+![screenshot](./docs/screenshot.gif)
+
 ## Install
 ```bash
 $ npm i -g @yelo/source-map-cli
