@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+'use strict'
+const meow = require('meow')
+const sourceMap = require('source-map')
+const stdin = require('get-stdin')
+const stringify = require('stringify-object')
+
+const cli = meow(
+  `
+	Usage
+	  $ cat <file> | source-map [line=1] <column>
+
+	Examples
+    $ cat ./index.js.map | source-map 416105
+	  $ cat ./index.js.map | source-map 2 4310
+`
+)
+
+const options = (() => {
+  if (cli.input.length === 0) {
+    throw new Error('Missing required param <column>')
+  }
+  if (cli.input.length === 1) {
+    return { line: 1, column: +cli.input[0] }
+  }
+  return { line: +cli.input[0], column: +cli.input[1] }
+})()
+
+;(async () => {
+  const content = await stdin()
+  sourceMap.SourceMapConsumer.with(content, null, consumer => {
+    console.log(
+      stringify(consumer.originalPositionFor(options), { indent: '  ' })
+    )
+  })
+})()
